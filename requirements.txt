@@ -7,7 +7,6 @@ beautifulsoup4==4.10.0
 blinker==1.4
 boto3==1.9.43
 botocore==1.12.253
-Brlapi==0.8.2
 brotlipy==0.7.0
 bs4==0.0.1
 cached-property==1.5.2
