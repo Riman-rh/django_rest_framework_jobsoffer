@@ -41,7 +41,7 @@ def get_company(request):
 @swagger_auto_schema(method='post', manual_parameters=[
     openapi.Parameter('company', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
     openapi.Parameter('rating', openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
-    openapi.Parameter('comment', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+    openapi.Parameter('body', openapi.IN_QUERY, type=openapi.TYPE_STRING),
 ])
 @api_view(['POST'])
 def create_company_review(request):
