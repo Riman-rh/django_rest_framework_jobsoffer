@@ -51,7 +51,7 @@ def create_company_review(request):
             owner = Customer.objects.get(id=request.user.id)
             serializer.save(owner=owner)
             return Response('ok')
-        return Response('not ok')
+        return Response(serializer.errors)
     return Response('user not authenticated')
 
 
