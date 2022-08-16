@@ -14,7 +14,7 @@ def register(request):
     if serializer.is_valid():
         serializer.save()
         return Response('ok')
-    return Response('not ok')
+    return Response(serializer.errors)
 
 
 @api_view(['GET'])
