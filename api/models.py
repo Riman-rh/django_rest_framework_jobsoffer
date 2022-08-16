@@ -6,12 +6,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     birthday = models.DateTimeField(null=True, blank=True)
-    address = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
-    gender = models.CharField(max_length=200, choices=[("M", "Male"), ("F", "Female"), ("U", "Unknown")])
+    address = models.CharField(max_length=200, null=True, blank=True)
+    phone = models.CharField(max_length=200, null=True, blank=True)
+    gender = models.CharField(max_length=200, choices=[("M", "Male"), ("F", "Female"), ("U", "Unknown")], null=True, blank=True)
     picture = models.ImageField(null=True, blank=True)
     github = models.URLField(null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False, null=True, blank=True)
     @property
     def first_name(self):
         return self.user.first_name
