@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    birthday = models.DateTimeField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=200, null=True, blank=True)
     gender = models.CharField(max_length=200, choices=[("M", "Male"), ("F", "Female"), ("U", "Unknown")], null=True, blank=True)
