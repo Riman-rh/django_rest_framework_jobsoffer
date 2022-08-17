@@ -82,7 +82,7 @@ def create_job_application(request):
     if request.user.is_authenticated:
         serializer = JobApplicationSerializer(data=request.data)
         if serializer.is_valid():
-            customer = Customer.objects.get(id=request.user.id)
+            customer = Customer.objects.get(user=request.user.id)
             serializer.save(customer=customer)
             return Response('ok')
         return Response(serializer.errors)
