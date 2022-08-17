@@ -101,7 +101,7 @@ def create_job_offer(request):
     if request.user.is_authenticated:
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
-            company = Company.objects.get(name_en=serializer.validated_data["company"])
+            company = Company.objects.get(id=serializer.validated_data["company"])
             admin = CompanyAdmin.objects.get(company=company)
             if request.user == admin.user:
                 serializer.save()
