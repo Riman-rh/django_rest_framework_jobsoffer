@@ -81,7 +81,7 @@ def list_company_review(request):
 def create_job_application(request):
     if request.user.is_authenticated:
         serializer = JobApplicationSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid():
             customer = Customer.objects.get(id=request.user.id)
             serializer.save(customer=customer)
             return Response('ok')

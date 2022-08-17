@@ -70,7 +70,7 @@ class GetJobSerializer(serializers.Serializer):
 class CompanyReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Companyreview
-        fields = ['company', 'body', 'rating']
+        fields = ['company', 'owner', 'body', 'rating']
 
 
 class JobSerializer(serializers.ModelSerializer):
