@@ -30,7 +30,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.validationError({'password': 'Password must match'})
         user.set_password(password)
         user.save()
-        customer = Customer(
+        customer = Customer.objects.create(
             user=user,
             birthday=self.validated_data['birthday'],
             gender=self.validated_data['gender'],
