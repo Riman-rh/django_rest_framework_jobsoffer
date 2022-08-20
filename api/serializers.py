@@ -19,7 +19,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-    def save(self):
+    def create(self, validated_data):
         user = User(
         email=self.validated_data['email'],
         username=self.validated_data['username'],
@@ -40,6 +40,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             github=self.validated_data['github']
         )
         customer.save()
+        return customer
 
 
 class CompanyListSerializer(serializers.ModelSerializer):

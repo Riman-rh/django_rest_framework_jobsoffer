@@ -12,6 +12,7 @@ class Customer(models.Model):
     picture = models.ImageField(null=True, blank=True)
     github = models.URLField(null=True, blank=True)
     is_verified = models.BooleanField(default=False, null=True, blank=True)
+
     @property
     def first_name(self):
         return self.user.first_name
