@@ -4,16 +4,17 @@ from .models import *
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['address', 'phone', 'picture', 'github', 'gender', 'birthday']
-
+        fields = ['address', 'phone',
+                    'github', 'gender', 'birthday']
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     customer = CustomerSerializer()
 
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password2', 'customer']
+        fields = ['username', 'email', 'password', 'password2', 'first_name', 'last_name','customer']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -29,9 +30,15 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.validationError({'password': 'Password must match'})
         user.set_password(password)
         user.save()
-        customer = self.validated_data['customer']
-        customer.user = user
-
+        customer = Customer.objects.create(
+            user=user,
+            birthday=self.validated_data['customer']['birthday'],
+            gender=self.validated_data['customer']['gender'],
+            address=self.validated_data['customer']['address'],
+            phone=self.validated_data['customer']['phone'],
+            github=self.validated_data['customer']['github']
+        )
+        customer.save()
         return customer
 
 
