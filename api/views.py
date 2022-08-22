@@ -44,7 +44,7 @@ def company_list(request):
 @api_view(['POST'])
 def createCompany(request):
     if request.user.is_authenticated:
-        serializer = CompanySerializer(request.data)
+        serializer = CompanySerializer(data=request.data)
         if serializer.is_valid():
             company = serializer.save()
             admin = CompanyAdmin.objects.create(company=company,user=request.user)
