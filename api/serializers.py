@@ -5,14 +5,14 @@ from .models import *
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['address', 'phone', 'picture',
+        fields = ['address', 'phone', #'picture',
                     'github', 'gender', 'birthday']
 
 
 class CustomerUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['id', 'address', 'phone', 'picture',
+        fields = ['id', 'address', 'phone', #'picture',
                     'github', 'gender', 'birthday']
 
 
