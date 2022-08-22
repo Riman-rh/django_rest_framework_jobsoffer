@@ -17,6 +17,7 @@ def register(request):
         return Response('ok')
     return Response(serializer.errors)
 
+
 @api_view(['PUT'])
 def profile_update(request):
     if request.user.is_authenticated:
@@ -53,6 +54,7 @@ def createCompany(request):
     return Response("not authorized")
 
 
+@api_view(['PUT'])
 def updateCompany(request):
     if request.user.is_authenticated:
         try:
@@ -99,6 +101,8 @@ def create_company_review(request):
         return Response(serializer.errors)
     return Response('user not authenticated')
 
+
+@api_view(['PUT'])
 def update_company_review(request):
     if request.user.is_authenticated:
         try:
