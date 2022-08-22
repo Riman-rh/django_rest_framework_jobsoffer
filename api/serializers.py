@@ -43,7 +43,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             gender=self.validated_data['customer']['gender'],
             address=self.validated_data['customer']['address'],
             phone=self.validated_data['customer']['phone'],
-            picture=self.validated_data['customer']['picture'],
+            #picture=self.validated_data['customer']['picture'],
             github=self.validated_data['customer']['github']
         )
         customer.save()
