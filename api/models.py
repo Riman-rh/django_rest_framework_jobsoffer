@@ -35,7 +35,7 @@ class Company(models.Model):
     description_ar = models.TextField(null=True, blank=True)
     founded_year = models.PositiveIntegerField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
-    phone = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50,null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     logo = models.ImageField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True)

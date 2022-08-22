@@ -50,7 +50,7 @@ def createCompany(request):
             admin = CompanyAdmin.objects.create(company=company,user=request.user)
             admin.save()
             return Response('ok')
-        return Response(serializer.error)
+        return Response(serializer.errors)
     return Response("not authorized")
 
 
