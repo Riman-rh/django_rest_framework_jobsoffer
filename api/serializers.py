@@ -1,17 +1,24 @@
 from rest_framework import serializers
 from .models import *
 
+
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['address', 'phone',
+        fields = ['address', 'phone', 'picture',
                     'github', 'gender', 'birthday']
+
+
+class CustomerUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['id', 'address', 'phone', 'picture',
+                    'github', 'gender', 'birthday']
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     customer = CustomerSerializer()
-
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'password2', 'first_name', 'last_name','customer']
@@ -36,6 +43,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             gender=self.validated_data['customer']['gender'],
             address=self.validated_data['customer']['address'],
             phone=self.validated_data['customer']['phone'],
+            picture=self.validated_data['customer']['picture'],
             github=self.validated_data['customer']['github']
         )
         customer.save()

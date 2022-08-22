@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
 
 id_param = openapi.Parameter('id', openapi.IN_QUERY, type=openapi.TYPE_INTEGER)
 
@@ -16,12 +17,56 @@ def register(request):
         return Response('ok')
     return Response(serializer.errors)
 
+@api_view(['PUT'])
+def profile_update(request):
+    if request.user.is_authenticated:
+        try:
+            profile = Customer.objects.get(id=request.data['id'])
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if request.user == profile.user:
+            serializer = CustomerSerializer(instance=profile, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response('ok')
+            return Response(serializer.errors)
+    return Response("you'r not authorized!")
+
 
 @api_view(['GET'])
 def company_list(request):
     result = Company.objects.all()
     serializer = CompanyListSerializer(result, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def createCompany(request):
+    if request.user.is_authenticated:
+        serializer = CompanySerializer(request.data)
+        if serializer.is_valid():
+            company = serializer.save()
+            admin = CompanyAdmin.objects.create(company=company,user=request.user)
+            admin.save()
+            return Response('ok')
+        return Response(serializer.error)
+    return Response("not authorized")
+
+
+def updateCompany(request):
+    if request.user.is_authenticated:
+        try:
+            company = Company.objects.get(id=request.data['id'])
+            admin = CompanyAdmin.objects.get(company=company)
+        except:
+            return Response('not found')
+        if request.user == admin.user:
+            serializer = CompanySerializer(instance=company, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response('ok')
+            return Response(serializer.errors)
+        return Response('not authorized')
 
 
 @swagger_auto_schema(method='get', manual_parameters=[id_param])
@@ -53,6 +98,21 @@ def create_company_review(request):
             return Response('ok')
         return Response(serializer.errors)
     return Response('user not authenticated')
+
+def update_company_review(request):
+    if request.user.is_authenticated:
+        try:
+            review = Companyreview.objects.get(id=request.data['id'])
+
+        except:
+            return Response('not found')
+        if request.user == review.owner.user:
+            serializer = CompanyReviewSerializer(instance=review, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response('ok')
+            return Response(serializer.errors)
+        return Response('not authorized')
 
 
 @swagger_auto_schema(method='get', manual_parameters=[id_param])
